@@ -21,18 +21,16 @@ typedef struct{
   int tail_end;
 }Snake;
 
+typedef struct{
+  int x;
+  int y;
+}Apple;
+
+
 void snake_init(Snake *snake, int x, int y);
-
-int snake_getX(Snake *snake);
-
-int snake_getY(Snake *snake);
-
-void snake_setX(Snake *snake, int x);
-
-void snake_setY(Snake *snake, int y);
-
 int snake_update(Snake *snake, int max_x, int max_y);
-
 int snake_grow(Snake *snake);
+
+int apple_generate(Snake *snake, Apple *apple);
 
 #endif

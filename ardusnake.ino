@@ -7,8 +7,8 @@
 //Direction OK
 //Grow OK
 //Collide self OK
-//Generate apple
-//Eat apple
+//Generate apple OK
+//Eat apple OK
 
 #define TPS 1
 #define FPS 2*TPS
@@ -24,8 +24,7 @@
 
 LedControl lc = LedControl(MATRIX_DIN, MATRIX_CLK, MATRIX_CS, 1); 
 Snake snake;
-unsigned long prev_frame = millis();
-unsigned long prev_tick = millis();
+Apple apple;
 
 void test_pattern();
 int pressed(); // Return the pressed key or -1
@@ -33,6 +32,9 @@ int init_game(); // Called at the end of setup
 int update_game();  // Called every TPS
 int update_screen(); // Called every frame
 int end_game(); // Called at the end of the game
+
+unsigned long prev_frame = millis();
+unsigned long prev_tick = millis();
 
 void setup() {
   pinMode(UP, INPUT_PULLUP);
@@ -115,6 +117,12 @@ int init_game(){
 
   snake_init(&snake, 4, 3);
 
+  apple.x = -1;
+  apple.y = -1;
+  if(apple_generate(&snake, &apple) != 0){
+    end_game();
+  }
+
   prev_frame = millis();
   prev_tick = millis();
 
@@ -123,8 +131,11 @@ int init_game(){
 
 
 int update_game(){
-  if(snake_update(&snake, 7, 7) != 0){
-    end_game();
+  if(snake_update(&snake, 7, 7) != 0) end_game();
+
+  if(snake.tail[0].x == apple.x && snake.tail[0].y == apple.y){ //Eat apple
+    if(snake_grow(&snake) != 0) end_game(); // Grow
+    if(apple_generate(&snake, &apple) != 0) end_game(); // New apple
   }
 }
 
@@ -133,6 +144,7 @@ int update_screen(){
   for(int i = 0; i<=snake.tail_end; i++){
     lc.setLed(0, snake.tail[i].x, snake.tail[i].y, HIGH);
   }
+  lc.setLed(0, apple.x, apple.y, HIGH);
   return 0;
 }
 

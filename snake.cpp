@@ -9,23 +9,6 @@ void snake_init(Snake *snake, int x, int y){
   return;
 }
 
-int snake_getX(Snake *snake){
-  return snake->tail[0].x;
-}
-
-int snake_getY(Snake *snake){
-  return snake->tail[0].y;
-}
-
-void snake_setX(Snake *snake, int x){
-  snake->tail[0].x = x;
-  return;
-}
-
-void snake_setY(Snake *snake, int y){
-  snake->tail[0].y = y;
-  return;
-}
 
 int snake_update(Snake *snake, int max_x, int max_y){
   //Start from the end of the tail and move each element to the place of the previous
@@ -103,5 +86,25 @@ int snake_grow(Snake *snake){
   }   
   snake->tail[end].x = x;
   snake->tail[end].y = y;
+  return 0;
+}
+
+
+int apple_generate(Snake *snake, Apple *apple){
+  int count = 0;
+  bool touch = false;
+  do{
+    apple->x = random(0, 7);
+    apple->y = random(0, 7);
+    for(int i = 0; i < snake->tail_end; i++){
+      if(apple->x == snake->tail[i].x && apple->y == snake->tail[i].y){
+        touch = true;
+      }
+    }
+    count++;
+    if(count>=1024){
+      return 1;
+    }
+  }while(touch);
   return 0;
 }
