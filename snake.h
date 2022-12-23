@@ -2,7 +2,7 @@
 #define SNAKE_H
 #include "Arduino.h"
 
-#define SNAKE_MAX 128
+#define SNAKE_MAX 64
 
 
 enum direction {D_RIGHT, D_UP, D_LEFT, D_DOWN};
