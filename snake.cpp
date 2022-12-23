@@ -29,11 +29,13 @@ void snake_setY(Snake *snake, int y){
 
 int snake_update(Snake *snake, int max_x, int max_y){
   //Start from the end of the tail and move each element to the place of the previous
+  //Do not move head (tail[0])
   for(int i = snake->tail_end; i > 0; i--){
     snake->tail[i].x = snake->tail[i-1].x;
     snake->tail[i].y = snake->tail[i-1].y;
   }
   
+  //Increment head
   switch(snake->dir){
     case D_RIGHT:
       snake->tail[0].x++;
@@ -49,6 +51,7 @@ int snake_update(Snake *snake, int max_x, int max_y){
       break;
   }
 
+  //Walls collision
   if(snake->tail[0].x > max_x){
     snake->tail[0].x = max_x;
     return 1;
@@ -63,6 +66,13 @@ int snake_update(Snake *snake, int max_x, int max_y){
   }else if(snake->tail[0].y < 0){
     snake->tail[0].y = 0;
     return 1;
+  }
+
+  //Self collision
+  for(int i = 1; i <= snake->tail_end; i++){
+    if(snake->tail[0].x == snake->tail[i].x && snake->tail[0].y == snake->tail[i].y){
+      return 2;
+    }
   }
   return 0;
 }

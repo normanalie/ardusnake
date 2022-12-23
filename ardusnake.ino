@@ -6,7 +6,7 @@
 //Collide wall OK
 //Direction OK
 //Grow OK
-//Collide self
+//Collide self OK
 //Generate apple
 //Eat apple
 
@@ -123,7 +123,7 @@ int init_game(){
 
 
 int update_game(){
-  if(snake_update(&snake, 7, 7) == 1){
+  if(snake_update(&snake, 7, 7) != 0){
     end_game();
   }
 }
