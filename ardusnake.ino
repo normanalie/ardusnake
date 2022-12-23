@@ -1,6 +1,13 @@
 #include "LedControl.h"
+#include "snake.h"
 
-//Display snake
+//Display snake OK
+//Move snake forward
+//Collide wall
+//Collide self
+//Direction
+//Generate apple
+//Eat apple
 
 #define MATRIX_DIN 3
 #define MATRIX_CLK 4
@@ -12,6 +19,7 @@
 #define RIGHT 8
 
 LedControl lc = LedControl(2, 3, 4, 1); 
+Snake snake;
 
 void test_pattern();
 
@@ -24,11 +32,15 @@ void setup() {
   lc.clearDisplay(0);
   lc.shutdown(0, false);
   lc.setIntensity(0, 2);
-  test_pattern();
+  //test_pattern();
+
+  snake.x = 4;
+  snake.y = 3;
+  snake.next = NULL;
 }
 
 void loop() {
-  
+  lc.setLed(0, snake.x, snake.y, HIGH);
 }
 
 
