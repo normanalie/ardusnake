@@ -13,16 +13,16 @@
 #define TPS 1
 #define FPS 2*TPS
 
-#define MATRIX_DIN 3
-#define MATRIX_CLK 4
-#define MATRIX_CS 5
+#define MATRIX_DIN 2
+#define MATRIX_CLK 3
+#define MATRIX_CS 4
 
 #define UP 11
 #define DOWN 9
 #define LEFT 10
 #define RIGHT 8
 
-LedControl lc = LedControl(2, 3, 4, 1); 
+LedControl lc = LedControl(MATRIX_DIN, MATRIX_CLK, MATRIX_CS, 1); 
 Snake snake;
 unsigned long prev_frame = millis();
 unsigned long prev_tick = millis();
@@ -113,13 +113,7 @@ int init_game(){
   test_pattern();
   delay(1000);
 
-  snake.x = 4;
-  snake.y = 3;
-  snake.dir = D_RIGHT;
-  for(int i=0; i<SNAKE_MAX; i++){
-    snake.tail[i].x = -1;
-    snake.tail[i].y = -1;
-  }
+  snake_init(&snake, 4, 3);
 
   prev_frame = millis();
   prev_tick = millis();

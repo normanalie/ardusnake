@@ -16,6 +16,9 @@ typedef struct{
   int y;
   enum direction dir;
   Tail tail[SNAKE_MAX];
+  int tail_end;
 }Snake;
+
+void snake_init(Snake *snake, int x, int y);
 
 #endif
