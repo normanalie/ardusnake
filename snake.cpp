@@ -102,7 +102,7 @@ int apple_generate(Snake *snake, Apple *apple){
       }
     }
     count++;
-    if(count>=1024){
+    if(count>=4096){
       return 1;
     }
   }while(touch);

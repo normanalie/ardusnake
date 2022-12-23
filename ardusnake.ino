@@ -9,9 +9,10 @@
 //Collide self OK
 //Generate apple OK
 //Eat apple OK
+//Fix illegals move OK
 
-#define TPS 1
-#define FPS 2*TPS
+#define TPS 2
+#define FPS 6
 
 #define MATRIX_DIN 2
 #define MATRIX_CLK 3
@@ -52,16 +53,16 @@ void setup() {
 void loop() {
   switch(pressed()){
     case UP:
-      snake.dir = D_UP;
+      snake.dir = (snake.dir != D_DOWN) ? D_UP : D_DOWN;
       break;
     case DOWN:
-      snake.dir = D_DOWN;
+      snake.dir = (snake.dir != D_UP) ? D_DOWN : D_UP;
       break;
     case RIGHT:
-      snake.dir = D_RIGHT;
+      snake.dir = (snake.dir != D_LEFT) ? D_RIGHT : D_LEFT;
       break;
     case LEFT:
-      snake.dir = D_LEFT;
+      snake.dir = (snake.dir != D_RIGHT) ? D_LEFT : D_RIGHT;
       break;
   }  
 
