@@ -93,6 +93,10 @@ int snake_grow(Snake *snake){
 
 
 int apple_generate(Snake *snake, Apple *apple){
+  if(snake->tail_end >= SNAKE_MAX){
+    return 1;
+  }
+
   int count = 0;
   bool touch = false;
   do{
@@ -104,8 +108,8 @@ int apple_generate(Snake *snake, Apple *apple){
       }
     }
     count++;
-    if(count>=4096){
-      return 1;
+    if(count>=1024){
+      return 2;
     }
   }while(touch);
   return 0;

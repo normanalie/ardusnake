@@ -12,9 +12,10 @@
 //Fix illegals move OK
 //Fix bad growing when changing direction OK
 //Fix RNG to be more random OK
+//Fix Apple generation OK
 
 #define TPS 2
-#define FPS 6
+#define FPS 10
 
 #define MATRIX_DIN 4
 #define MATRIX_CLK 2
@@ -29,6 +30,7 @@ LedControl lc = LedControl(MATRIX_DIN, MATRIX_CLK, MATRIX_CS, 1);
 Snake snake;
 Apple apple;
 
+void init_rng();
 void test_pattern();
 int pressed(); // Return the pressed key or -1
 int init_game(); // Called at the end of setup
@@ -45,7 +47,7 @@ void setup() {
   pinMode(LEFT, INPUT_PULLUP);
   pinMode(RIGHT, INPUT_PULLUP);
 
-  randomSeed(analogRead(A1*A7));
+  init_rng();
 
   lc.clearDisplay(0);
   lc.shutdown(0, false);
@@ -81,6 +83,11 @@ void loop() {
   }
 }
 
+
+void init_rng(){
+  randomSeed(analogRead(A1*A7));
+  return;
+}
 
 void test_pattern(){
   for(int j = 0; j < 8; j++){
@@ -124,7 +131,13 @@ int init_game(){
 
   apple.x = -1;
   apple.y = -1;
-  if(apple_generate(&snake, &apple) != 0){
+  int ret = apple_generate(&snake, &apple);
+  if(ret == 2){  // Too much trial to find a free spot
+    init_rng();
+    if(apple_generate(&snake, &apple) != 0){ // Try one more time with a different rng seed
+      end_game();
+    }
+  }else if(ret != 0){
     end_game();
   }
 
@@ -136,11 +149,20 @@ int init_game(){
 
 
 int update_game(){
-  if(snake_update(&snake, 7, 7) != 0) end_game();
-
   if(snake.tail[0].x == apple.x && snake.tail[0].y == apple.y){ //Eat apple
     if(snake_grow(&snake) != 0) end_game(); // Grow
-    if(apple_generate(&snake, &apple) != 0) end_game(); // New apple
+
+    int ret = apple_generate(&snake, &apple); // New apple
+    if(ret == 2){  // Too much trial to find a free spot
+      init_rng();
+      if(apple_generate(&snake, &apple) != 0){ // Try one more time with a different rng seed
+        end_game();
+      }
+    }else if(ret != 0){
+      end_game();
+    }
+  }else{ // Just update
+    if(snake_update(&snake, 7, 7) != 0) end_game();
   }
 }
 
