@@ -10,18 +10,19 @@
 //Generate apple OK
 //Eat apple OK
 //Fix illegals move OK
+//Fix bad growing when changing direction OK
 
 #define TPS 2
 #define FPS 6
 
-#define MATRIX_DIN 2
-#define MATRIX_CLK 3
-#define MATRIX_CS 4
+#define MATRIX_DIN 4
+#define MATRIX_CLK 2
+#define MATRIX_CS 3
 
 #define UP 11
-#define DOWN 9
-#define LEFT 10
-#define RIGHT 8
+#define DOWN 10
+#define LEFT 12
+#define RIGHT 9
 
 LedControl lc = LedControl(MATRIX_DIN, MATRIX_CLK, MATRIX_CS, 1); 
 Snake snake;
@@ -30,7 +31,7 @@ Apple apple;
 void test_pattern();
 int pressed(); // Return the pressed key or -1
 int init_game(); // Called at the end of setup
-int update_game();  // Called every TPS
+int update_game();  // Called every tick
 int update_screen(); // Called every frame
 int end_game(); // Called at the end of the game
 
@@ -45,24 +46,24 @@ void setup() {
 
   lc.clearDisplay(0);
   lc.shutdown(0, false);
-  lc.setIntensity(0, 2);
-  //test_pattern();
+  lc.setIntensity(0, 3);
+  //test_pattern(); 
   init_game();
 }
 
 void loop() {
   switch(pressed()){
     case UP:
-      snake.dir = (snake.dir != D_DOWN) ? D_UP : D_DOWN;
+      snake.tail[0].dir = (snake.tail[0].dir != D_DOWN) ? D_UP : D_DOWN;
       break;
     case DOWN:
-      snake.dir = (snake.dir != D_UP) ? D_DOWN : D_UP;
+      snake.tail[0].dir = (snake.tail[0].dir != D_UP) ? D_DOWN : D_UP;
       break;
     case RIGHT:
-      snake.dir = (snake.dir != D_LEFT) ? D_RIGHT : D_LEFT;
+      snake.tail[0].dir = (snake.tail[0].dir != D_LEFT) ? D_RIGHT : D_LEFT;
       break;
     case LEFT:
-      snake.dir = (snake.dir != D_RIGHT) ? D_LEFT : D_RIGHT;
+      snake.tail[0].dir = (snake.tail[0].dir != D_RIGHT) ? D_LEFT : D_RIGHT;
       break;
   }  
 

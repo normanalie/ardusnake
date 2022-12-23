@@ -11,12 +11,10 @@ typedef struct Tail Tail;
 struct Tail{
   int x;
   int y;
+  enum direction dir;
 };
 
 typedef struct{
-  int x;
-  int y;
-  enum direction dir;
   Tail tail[SNAKE_MAX];
   int tail_end;
 }Snake;

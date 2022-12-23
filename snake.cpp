@@ -4,7 +4,7 @@
 void snake_init(Snake *snake, int x, int y){
   snake->tail[0].x = x;
   snake->tail[0].y = y;
-  snake->dir = D_RIGHT;
+  snake->tail[0].dir = D_RIGHT;
   snake->tail_end = 0; // Head only 
   return;
 }
@@ -16,10 +16,11 @@ int snake_update(Snake *snake, int max_x, int max_y){
   for(int i = snake->tail_end; i > 0; i--){
     snake->tail[i].x = snake->tail[i-1].x;
     snake->tail[i].y = snake->tail[i-1].y;
+    snake->tail[i].dir = snake->tail[i-1].dir;
   }
   
   //Increment head
-  switch(snake->dir){
+  switch(snake->tail[0].dir){
     case D_RIGHT:
       snake->tail[0].x++;
       break;
@@ -70,7 +71,8 @@ int snake_grow(Snake *snake){
 
   int x = snake->tail[end-1].x;
   int y = snake->tail[end-1].y;
-  switch(snake->dir){
+  snake->tail[end].dir = snake->tail[end-1].dir;
+  switch(snake->tail[end].dir){
     case D_RIGHT:
       x--;
       break;
