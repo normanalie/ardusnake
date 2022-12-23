@@ -33,4 +33,6 @@ void snake_setY(Snake *snake, int y);
 
 int snake_update(Snake *snake, int max_x, int max_y);
 
+int snake_grow(Snake *snake);
+
 #endif

@@ -60,3 +60,32 @@ int snake_update(Snake *snake, int max_x, int max_y){
   }
   return 0;
 }
+
+
+int snake_grow(Snake *snake){
+  if(snake->tail_end >= SNAKE_MAX){
+    return 1;
+  }
+  snake->tail_end++;
+  int end = snake->tail_end;
+
+  int x = snake->tail[end-1].x;
+  int y = snake->tail[end-1].y;
+  switch(snake->dir){
+    case D_RIGHT:
+      x--;
+      break;
+    case D_LEFT:
+      x++;
+      break;
+    case D_UP:
+      y--;
+      break;
+    case D_DOWN:
+      y++;
+      break;
+  }   
+  snake->tail[end].x = x;
+  snake->tail[end].y = y;
+  return 0;
+}

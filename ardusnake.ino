@@ -123,6 +123,9 @@ int init_game(){
 
 
 int update_game(){
+  if(snake_grow(&snake) == 1){
+    end_game();
+  }
   if(snake_update(&snake, 7, 7) == 1){
     end_game();
   }
