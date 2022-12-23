@@ -5,7 +5,7 @@
 //Move snake forward OK
 //Collide wall OK
 //Direction OK
-//Grow
+//Grow <--
 //Collide self
 //Generate apple
 //Eat apple
@@ -116,7 +116,10 @@ int init_game(){
   snake.x = 4;
   snake.y = 3;
   snake.dir = D_RIGHT;
-  snake.next = NULL;
+  for(int i=0; i<SNAKE_MAX; i++){
+    snake.tail[i].x = -1;
+    snake.tail[i].y = -1;
+  }
 
   prev_frame = millis();
   prev_tick = millis();
