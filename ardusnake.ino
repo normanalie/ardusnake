@@ -11,6 +11,7 @@
 //Eat apple OK
 //Fix illegals move OK
 //Fix bad growing when changing direction OK
+//Fix RNG to be more random OK
 
 #define TPS 2
 #define FPS 6
@@ -43,6 +44,8 @@ void setup() {
   pinMode(DOWN, INPUT_PULLUP);
   pinMode(LEFT, INPUT_PULLUP);
   pinMode(RIGHT, INPUT_PULLUP);
+
+  randomSeed(analogRead(A1*A7));
 
   lc.clearDisplay(0);
   lc.shutdown(0, false);
