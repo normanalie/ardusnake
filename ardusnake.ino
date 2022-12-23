@@ -123,42 +123,16 @@ int init_game(){
 
 
 int update_game(){
-  switch(snake.dir){
-    case D_RIGHT:
-      snake.x++;
-      break;
-    case D_LEFT:
-      snake.x--;
-      break;
-    case D_UP:
-      snake.y++;
-      break;
-    case D_DOWN:
-      snake.y--;
-      break;
-  }
-
-  if(snake.x > 7){
-    snake.x = 7;
-    end_game();
-  }else if(snake.x < 0){
-    snake.x = 0;
-    end_game();    
-  }
-  
-  if(snake.y > 7){
-    snake.y = 7;
-    end_game();
-  }else if(snake.y < 0){
-    snake.y = 0;
+  if(snake_update(&snake, 7, 7) == 1){
     end_game();
   }
-  return 0;
 }
 
 int update_screen(){
   lc.clearDisplay(0);
-  lc.setLed(0, snake.x, snake.y, HIGH);
+  for(int i = 0; i<=snake.tail_end; i++){
+    lc.setLed(0, snake.tail[i].x, snake.tail[i].y, HIGH);
+  }
   return 0;
 }
 
