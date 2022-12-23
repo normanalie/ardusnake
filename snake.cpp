@@ -28,6 +28,12 @@ void snake_setY(Snake *snake, int y){
 }
 
 int snake_update(Snake *snake, int max_x, int max_y){
+  //Start from the end of the tail and move each element to the place of the previous
+  for(int i = snake->tail_end; i > 0; i--){
+    snake->tail[i].x = snake->tail[i-1].x;
+    snake->tail[i].y = snake->tail[i-1].y;
+  }
+  
   switch(snake->dir){
     case D_RIGHT:
       snake->tail[0].x++;
