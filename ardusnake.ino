@@ -10,8 +10,8 @@
 //Generate apple
 //Eat apple
 
-#define TICK 1
-#define FPS 30
+#define TPS 1
+#define FPS 2*TPS
 
 #define MATRIX_DIN 3
 #define MATRIX_CLK 4
@@ -30,7 +30,7 @@ unsigned long prev_tick = millis();
 void test_pattern();
 int pressed(); // Return the pressed key or -1
 int init_game(); // Called at the end of setup
-int update_game();  // Called every tick
+int update_game();  // Called every TPS
 int update_screen(); // Called every frame
 int end_game(); // Called at the end of the game
 
@@ -68,7 +68,7 @@ void loop() {
     prev_frame = millis();
   }
   
-  if(millis() - prev_tick >= 1000/TICK){
+  if(millis() - prev_tick >= 1000/TPS){
     update_game();
     prev_tick = millis();
   }
@@ -170,7 +170,6 @@ int update_screen(){
 
 
 int end_game(){
-  delay(200);
   init_game();
   return 0;
 }
