@@ -4,7 +4,7 @@
 //Display snake OK
 //Move snake forward OK
 //Collide wall OK
-//Direction
+//Direction OK
 //Grow
 //Collide self
 //Generate apple
@@ -28,6 +28,7 @@ unsigned long prev_frame = millis();
 unsigned long prev_tick = millis();
 
 void test_pattern();
+int pressed(); // Return the pressed key or -1
 int init_game(); // Called at the end of setup
 int update_game();  // Called every tick
 int update_screen(); // Called every frame
@@ -47,6 +48,21 @@ void setup() {
 }
 
 void loop() {
+  switch(pressed()){
+    case UP:
+      snake.dir = D_UP;
+      break;
+    case DOWN:
+      snake.dir = D_DOWN;
+      break;
+    case RIGHT:
+      snake.dir = D_RIGHT;
+      break;
+    case LEFT:
+      snake.dir = D_LEFT;
+      break;
+  }  
+
   if(millis() - prev_frame >= 1000/FPS){
     update_screen();
     prev_frame = millis();
@@ -76,13 +92,30 @@ void test_pattern(){
 }
 
 
+int pressed(){
+  if(!digitalRead(UP)){
+    return UP;
+  }
+  if(!digitalRead(DOWN)){
+    return DOWN;
+  }
+  if(!digitalRead(LEFT)){
+    return LEFT;
+  }
+  if(!digitalRead(RIGHT)){
+    return RIGHT;
+  }
+  return -1;
+}
+
+
 int init_game(){
   test_pattern();
   delay(1000);
 
   snake.x = 4;
   snake.y = 3;
-  snake.dir = RIGHT;
+  snake.dir = D_RIGHT;
   snake.next = NULL;
 
   prev_frame = millis();
@@ -94,16 +127,16 @@ int init_game(){
 
 int update_game(){
   switch(snake.dir){
-    case RIGHT:
+    case D_RIGHT:
       snake.x++;
       break;
-    case LEFT:
+    case D_LEFT:
       snake.x--;
       break;
-    case UP:
+    case D_UP:
       snake.y++;
       break;
-    case DOWN:
+    case D_DOWN:
       snake.y--;
       break;
   }

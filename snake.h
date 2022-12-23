@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-enum direction {RIGHT, UP, LEFT, DOWN};
+enum direction {D_RIGHT, D_UP, D_LEFT, D_DOWN};
 
 typedef struct Tail Tail;
 struct Tail{
