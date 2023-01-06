@@ -85,7 +85,7 @@ void loop() {
 
 
 void init_rng(){
-  randomSeed(analogRead(A1*A7));
+  randomSeed(analogRead(A7)+analogRead(A1));
   return;
 }
 
