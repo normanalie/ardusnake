@@ -19,7 +19,7 @@
 
 #define MATRIX_DIN 4
 #define MATRIX_CLK 2
-#define MATRIX_CS 3
+#define MATRIX_CS 7
 
 #define UP 11
 #define DOWN 10
